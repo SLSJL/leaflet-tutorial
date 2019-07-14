@@ -1,34 +1,45 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Map1 from './../views/Map.1.vue'
-import Map2 from './../views/Map.2.vue'
-import Map3 from './../views/Map.3.vue'
-import Point from './../views/Point.vue'
+import Vue from "vue";
+import Router from "vue-router";
+import Map1 from "./../views/Map.1.vue";
+import AddGraphics from "./../views/AddGraphics.vue";
+import Cluster from "./../views/Cluster.vue";
+import Point from "./../views/Point.vue";
+import Polyline from "./../views/Polyline.vue";
+import Polygon from "./../views/Polygon.vue";
 
-
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'map',
+      path: "/",
+      name: "map",
       component: Map1
     },
     {
-      path: '/map2',
-      name: 'map2',
-      component: Map2
+      path: "/addGraphics",
+      name: "addGraphics",
+      component: AddGraphics
     },
     {
-      path: '/map3',
-      name: 'map3',
-      component: Map3
+      path: "/cluster",
+      name: "cluster",
+      component: Cluster
     },
     {
-      path: '/point',
-      name: 'point',
+      path: "/point",
+      name: "point",
       component: Point
+    },
+    {
+      path: "/polyline",
+      name: "polyline",
+      component: Polyline
+    },
+    {
+      path: "/polygon",
+      name: "polygon",
+      component: Polygon
     }
   ]
-})
+});

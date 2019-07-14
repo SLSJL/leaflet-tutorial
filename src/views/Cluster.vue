@@ -21,7 +21,7 @@ export default {
 
     let cluster = this.$utils.map.createMakerCluster();
     for (let i = 0; i < 200; i++) {
-      let latlng = this.$utils.map.getRandomLatLng(this.map);
+      let latlng = this.$utils.map.getRandomLatLng();
       let maker = this.$utils.map.createMakerByLatlng(latlng);
       cluster.addLayer(maker);
     }

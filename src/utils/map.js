@@ -107,12 +107,15 @@ const getRandomLatLng = map => {
     southWest.lng + lngSpan * Math.random()
   );
 };
-
+const getLatLng = (x, y) => {
+  return $L.latLng(y, x);
+};
 
 const addCursorStyle = (map, cursorStyle) => {
   CursorStyle = cursorStyle;
   $L.DomUtil.addClass(map._container, cursorStyle);
 };
+
 const removerCoursorStyle = map => {
   $L.DomUtil.removeClass(map._container, CursorStyle);
 };
@@ -130,5 +133,6 @@ export default {
   createMakerCluster,
   getRandomLatLng,
   addCursorStyle,
-  removerCoursorStyle
+  removerCoursorStyle,
+  getLatLng
 };
