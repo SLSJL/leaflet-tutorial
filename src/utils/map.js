@@ -1,9 +1,12 @@
+import $L from "leaflet";
 import "leaflet/dist/leaflet.css";
+
+import "leaflet.markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
-import $L from "leaflet";
-import "leaflet.markercluster";
+import "leaflet-measure-path";
+import "leaflet-measure-path/leaflet-measure-path.css";
 
 // 解决默认 maker 无法显示的问题
 import icon from "leaflet/dist/images/marker-icon.png";

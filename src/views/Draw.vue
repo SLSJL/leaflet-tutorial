@@ -1,7 +1,7 @@
 <template>
   <div class="map-container">
     <div id="map-container"></div>
-    <MapDraw @point="{}" @polyline="{}" @polygon="drawPolygon" @end="drawOff"></MapDraw>
+    <MapDraw @point="drawPoint" @polyline="drawPolyline" @polygon="drawPolygon" @end="drawOff"></MapDraw>
   </div>
 </template>
 
@@ -16,9 +16,13 @@ export default {
       map: null,
       OSMUrl: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       overLayer: {
+        polylines: [],
         polygons: []
       },
       tempGp: {
+        lineNode: [],
+        lineNodeLen: 0,
+        tempLine: null,
         polygonNode: [],
         polygonNodeLen: 0,
         tempNode: [],
@@ -33,6 +37,7 @@ export default {
   },
   methods: {
     drawOn() {
+      this.clearTemps();
       // 移除监听地图事件
       this.map.off("click");
       this.map.off("mousemove");
@@ -51,10 +56,72 @@ export default {
     },
     drawPoint() {
       this.drawOn();
-
       this.$utils.map.addCursorStyle(this.map, "pointer-cursor");
       this.map.on("click", evt => {
         this.$utils.map.createMakerByLatlng(evt.latlng).addTo(this.map);
+      });
+    },
+    clearTemps() {
+      // 清空线中间数据
+      this.tempGp.polygonNode = [];
+      this.tempGp.polygonNodeLen = 0;
+      if (this.tempGp.tempPolygon) this.tempGp.tempPolygon.remove();
+      this.tempGp.tempNode.map(el => el.remove());
+      // 清空面中间数据
+      this.tempGp.lineNode = [];
+      this.tempGp.lineNodeLen = 0;
+      if (this.tempGp.tempLine) this.tempGp.tempLine.remove();
+      this.tempGp.tempNode.map(el => el.remove());
+    },
+    drawPolyline() {
+      this.$utils.map.addCursorStyle(this.map, "crosshare-cursor");
+      this.drawOn();
+      let tempPolygonOpts = {
+        color: "rgba(255, 0, 0, 0.85)",
+        weight: 3,
+        opacity: 0.85
+      };
+
+      let finalPolygonOpts = {
+        color: "rgba(0, 255, 0, 0.85)",
+        weight: 3,
+        opacity: 0.85
+      };
+
+      this.map.on("click", evt => {
+        this.tempGp.lineNode.push([evt.latlng.lat, evt.latlng.lng]);
+        this.tempGp.tempNode.push(this.addNode(evt.latlng, this.map));
+        this.tempGp.lineNodeLen = this.tempGp.lineNode.length;
+      });
+
+      this.map.on("mousemove", evt => {
+        if (this.tempGp.lineNodeLen >= 1) {
+          if (this.tempGp.tempLine) this.tempGp.tempLine.remove();
+          this.tempGp.lineNode[this.tempGp.lineNodeLen] = [
+            evt.latlng.lat,
+            evt.latlng.lng
+          ];
+
+          this.tempGp.tempLine = this.$utils.map.createPolyline(
+            this.map,
+            this.tempGp.lineNode,
+            tempPolygonOpts
+          );
+        }
+      });
+
+      this.map.on("dblclick", () => {
+        this.overLayer.polylines.push(
+          this.$utils.map.createPolyline(
+            this.map,
+            this.tempGp.lineNode,
+            finalPolygonOpts
+          )
+        );
+        this.tempGp.lineNode = [];
+        this.tempGp.lineNodeLen = 0;
+        this.tempGp.tempLine.remove();
+        this.tempGp.tempNode.map(el => el.remove());
       });
     },
     addNode(latlng, map) {
@@ -70,12 +137,12 @@ export default {
     },
     drawPolygon() {
       this.$utils.map.addCursorStyle(this.map, "crosshare-cursor");
+      this.drawOn();
 
       let tempPolygonOpts = {
         color: "rgba(255, 0, 0, 0.85)",
         weight: 3,
-        opacity: 0.85,
-        interactive:false
+        opacity: 0.85
       };
 
       let finalPolygonOpts = {
@@ -84,11 +151,10 @@ export default {
         opacity: 0.85
       };
 
-      this.drawOn();
-
       this.map.on("click", evt => {
         this.tempGp.polygonNode.push([evt.latlng.lat, evt.latlng.lng]);
         this.tempGp.polygonNodeLen = this.tempGp.polygonNode.length;
+
         this.tempGp.tempNode.push(this.addNode(evt.latlng, this.map));
       });
 

@@ -1,11 +1,16 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Map1 from "./../views/Map.1.vue";
+import MapStart from "./../views/MapStart.vue";
 import AddGraphics from "./../views/AddGraphics.vue";
 import Cluster from "./../views/Cluster.vue";
+import Draw from "./../views/Draw.vue";
 import Point from "./../views/Point.vue";
 import Polyline from "./../views/Polyline.vue";
 import Polygon from "./../views/Polygon.vue";
+import StaticMeasure from "./../views/MeasureStatic.vue";
+import DynamicMeasure from "./../views/MeasureDynamic.vue";
+import MeasureBySelect from "./../views/MeasureBySelect.vue";
+import MeasureDistance from "./../views/MeasureDistance.vue";
 
 Vue.use(Router);
 
@@ -14,7 +19,7 @@ export default new Router({
     {
       path: "/",
       name: "map",
-      component: Map1
+      component: MapStart
     },
     {
       path: "/addGraphics",
@@ -25,6 +30,11 @@ export default new Router({
       path: "/cluster",
       name: "cluster",
       component: Cluster
+    },
+    {
+      path: "/draw",
+      name: "draw",
+      component: Draw
     },
     {
       path: "/point",
@@ -40,6 +50,26 @@ export default new Router({
       path: "/polygon",
       name: "polygon",
       component: Polygon
+    },
+    {
+      path: "/staticmeasure",
+      name: "staticmeasure",
+      component: StaticMeasure
+    },
+    {
+      path: "/dynamicmeasure",
+      name: "dynamicmeasure",
+      component: DynamicMeasure
+    },
+    {
+      path: "/measurebyselect",
+      name: "MeasureBySelect",
+      component: MeasureBySelect
+    },
+    {
+      path: "/measuredistance",
+      name: "measuredistance",
+      component: MeasureDistance
     }
   ]
 });
