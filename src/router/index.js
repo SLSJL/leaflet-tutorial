@@ -11,6 +11,7 @@ import StaticMeasure from "./../views/MeasureStatic.vue";
 import DynamicMeasure from "./../views/MeasureDynamic.vue";
 import MeasureBySelect from "./../views/MeasureBySelect.vue";
 import MeasureDistance from "./../views/MeasureDistance.vue";
+import Arcgis from "./../views/ArcgisServices.vue";
 
 Vue.use(Router);
 
@@ -70,6 +71,11 @@ export default new Router({
       path: "/measuredistance",
       name: "measuredistance",
       component: MeasureDistance
+    },
+    {
+      path: "/arcgis",
+      name: "arcgis",
+      component: Arcgis
     }
   ]
 });

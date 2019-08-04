@@ -1,5 +1,5 @@
 {
-  "name": "1-start",
+  "name": "leaflet-turorail",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "esri-leaflet": "^2.3.0",
+    "esri-leaflet-cluster": "^2.0.0",
+    "esri-leaflet-renderers": "^2.0.6",
     "leaflet": "^1.4.0",
     "leaflet-measure-path": "^1.4.2",
     "leaflet.markercluster": "^1.4.1",

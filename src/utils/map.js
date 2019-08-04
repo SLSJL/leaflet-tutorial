@@ -1,5 +1,5 @@
-import $L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import * as $L from "leaflet";
 
 import "leaflet.markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -7,6 +7,18 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 import "leaflet-measure-path";
 import "leaflet-measure-path/leaflet-measure-path.css";
+
+import {
+  basemapLayer,
+  featureLayer,
+  tiledMapLayer,
+  dynamicMapLayer
+  // identifyFeatures
+} from "esri-leaflet";
+
+// import "esri-leaflet-renderers";
+import Cluster from "./cluster";
+import "esri-leaflet-cluster"
 
 // 解决默认 maker 无法显示的问题
 import icon from "leaflet/dist/images/marker-icon.png";
@@ -85,6 +97,10 @@ const createPolygon = (map, areaPath, areaOpts) => {
   return polygon;
 };
 
+const createCircleMaker = (latlng, size, opts) => {
+  return $L.circleMarker(latlng, size, opts);
+};
+
 const createPopup = (map, options) => {
   let popup = $L.popup(options);
   return popup;
@@ -123,6 +139,26 @@ const removerCoursorStyle = map => {
   $L.DomUtil.removeClass(map._container, CursorStyle);
 };
 
+const addEsirBasemap = async (map, layerName) => {
+  return await basemapLayer(layerName).addTo(map);
+};
+
+const addEsirFeatureLayer = async (map, opts) => {
+  return await featureLayer(opts).addTo(map);
+};
+
+const addEsirTiledMapLayer = async (map, opts) => {
+  return await tiledMapLayer(opts).addTo(map);
+};
+
+const addEsirDynamicMapLayer = async (map, opts) => {
+  return await dynamicMapLayer(opts).addTo(map);
+};
+
+const addEsirClusterLayer = async (map, opts) => {
+  return await Cluster(opts).addTo(map);
+};
+
 export default {
   createMap,
   createTileLayer,
@@ -131,11 +167,17 @@ export default {
   createMakerByLatlng,
   createPolyline,
   createPolygon,
+  createCircleMaker,
   createPopup,
   createLatlonByArray,
   createMakerCluster,
   getRandomLatLng,
   addCursorStyle,
   removerCoursorStyle,
-  getLatLng
+  getLatLng,
+  addEsirBasemap,
+  addEsirFeatureLayer,
+  addEsirTiledMapLayer,
+  addEsirDynamicMapLayer,
+  addEsirClusterLayer
 };
