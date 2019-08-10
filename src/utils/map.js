@@ -2,6 +2,7 @@ import "leaflet/dist/leaflet.css";
 import * as $L from "leaflet";
 
 import "leaflet.markercluster";
+import "leaflet.heat";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
@@ -12,13 +13,15 @@ import {
   basemapLayer,
   featureLayer,
   tiledMapLayer,
-  dynamicMapLayer
-  // identifyFeatures
+  dynamicMapLayer,
+  imageMapLayer
 } from "esri-leaflet";
 
 // import "esri-leaflet-renderers";
-import Cluster from "./cluster";
-import "esri-leaflet-cluster"
+import "esri-leaflet-cluster";
+import "esri-leaflet-heatmap/dist/esri-leaflet-heatmap-debug";
+import Cluster from "./esri-cluster";
+import Heatmap from "./esri-heatmap";
 
 // 解决默认 maker 无法显示的问题
 import icon from "leaflet/dist/images/marker-icon.png";
@@ -143,10 +146,6 @@ const addEsirBasemap = async (map, layerName) => {
   return await basemapLayer(layerName).addTo(map);
 };
 
-const addEsirFeatureLayer = async (map, opts) => {
-  return await featureLayer(opts).addTo(map);
-};
-
 const addEsirTiledMapLayer = async (map, opts) => {
   return await tiledMapLayer(opts).addTo(map);
 };
@@ -154,10 +153,25 @@ const addEsirTiledMapLayer = async (map, opts) => {
 const addEsirDynamicMapLayer = async (map, opts) => {
   return await dynamicMapLayer(opts).addTo(map);
 };
+const addImageMaplayer = async (map, opts) => {
+  return await imageMapLayer(opts).addTo(map);
+};
+
+const addEsirFeatureLayer = async (map, opts) => {
+  return await featureLayer(opts).addTo(map);
+};
+
 
 const addEsirClusterLayer = async (map, opts) => {
   return await Cluster(opts).addTo(map);
 };
+
+const addEsriHeatmap = async (map, opts) => {
+  return await Heatmap(opts).addTo(map);
+};
+
+
+
 
 export default {
   createMap,
@@ -179,5 +193,7 @@ export default {
   addEsirFeatureLayer,
   addEsirTiledMapLayer,
   addEsirDynamicMapLayer,
-  addEsirClusterLayer
+  addImageMaplayer,
+  addEsirClusterLayer,
+  addEsriHeatmap
 };
